@@ -13,7 +13,11 @@ class _NewExpenseState extends State<NewExpense> {
   // control text input
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+
   DateTime? _selectedDate;
+
+  Category _selectedCategory = Category.leisure;
+
   void _presentDatePicker() async {
     final now = DateTime.now();
     final fistDate = DateTime(now.year - 1);
@@ -76,8 +80,26 @@ class _NewExpenseState extends State<NewExpense> {
               ))
             ],
           ),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
+              DropdownButton(
+                  value: _selectedCategory,
+                  items: Category.values
+                      .map((e) => DropdownMenuItem(
+                          value: e, child: Text(e.name.toUpperCase())))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _selectedCategory = value;
+                    });
+                  }),
+              const Spacer(),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
