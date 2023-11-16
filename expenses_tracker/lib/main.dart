@@ -10,12 +10,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var kColorScheme =
+        ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 54, 89, 244));
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: ThemeData().copyWith(
+          colorScheme: kColorScheme,
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme().copyWith(
+              backgroundColor: kColorScheme.onPrimaryContainer,
+              foregroundColor: Colors.white),
+          scaffoldBackgroundColor: Colors.blueGrey),
+
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,

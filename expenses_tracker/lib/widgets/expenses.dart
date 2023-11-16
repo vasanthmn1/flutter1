@@ -13,27 +13,68 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registerExpenses = [
     Expense(
-        amount: 12.22,
+        amount: 12,
         date: DateTime.now(),
-        title: "title",
+        title: 'some',
         category: Category.food),
     Expense(
-        amount: 30.22,
+        amount: 12,
         date: DateTime.now(),
-        title: "Cinema",
-        category: Category.leisure),
+        title: 'some',
+        category: Category.food),
   ];
 
   void _openAddExpenseOverlay(ctx) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (ctx) {
-          return const NewExpense();
+          return NewExpense(
+            onAddExpense: _addNewExpense,
+          );
         });
+  }
+
+  void _addNewExpense(Expense expense) {
+    setState(() {
+      _registerExpenses.add(expense);
+    });
+    Navigator.pop(context);
+  }
+
+  void _removeExpense(Expense expense) {
+    final expenseIndex = _registerExpenses.indexOf(expense);
+    setState(() {
+      _registerExpenses.remove(expense);
+    });
+
+    ScaffoldMessenger.of(context).clearSnackBars(); // quick remove SnackBar
+    // deleted msg
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Deleted"),
+      duration: const Duration(seconds: 3),
+      // undo deleted item
+      action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              _registerExpenses.insert(expenseIndex, expense);
+            });
+          }),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text("No Expense"),
+    );
+
+    if (_registerExpenses.isNotEmpty) {
+      mainContent =
+          ExpensesList(expense: _registerExpenses, remove: _removeExpense);
+    }
+
     return Scaffold(
       // toolbar topBar
       appBar: AppBar(title: const Text("Expenses Tracker"), actions: [
@@ -46,7 +87,7 @@ class _ExpensesState extends State<Expenses> {
       body: Column(children: [
         const Text("The Charts"),
         // list of expenses
-        Expanded(child: ExpensesList(expense: _registerExpenses))
+        Expanded(child: mainContent)
       ]),
     );
   }

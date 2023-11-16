@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
 
+  final Function(Expense expense) onAddExpense;
   @override
   State<NewExpense> createState() => _NewExpenseState();
 }
@@ -32,6 +33,40 @@ class _NewExpenseState extends State<NewExpense> {
     //
   }
 
+//
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountInvalid = enteredAmount == null || enteredAmount <= 0;
+
+    if (_titleController.text.trim().isEmpty ||
+        amountInvalid ||
+        _selectedDate == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Invalid input"),
+              content: const Text("Please fill all deities"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Ok"))
+              ],
+            );
+          });
+      return;
+    }
+    widget.onAddExpense(Expense(
+        amount: enteredAmount,
+        date: _selectedDate!,
+        title: _titleController.text,
+        category: _selectedCategory));
+  }
+
+  void _addExpaense(Expense expense) {}
+
   @override
   void dispose() {
     super.dispose();
@@ -42,7 +77,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -107,7 +142,7 @@ class _NewExpenseState extends State<NewExpense> {
                   child: const Text("Chancel")),
               ElevatedButton(
                   onPressed: () {
-                    print(_titleController.text);
+                    _submitExpenseData();
                   },
                   child: const Text("Save Expense"))
             ],
