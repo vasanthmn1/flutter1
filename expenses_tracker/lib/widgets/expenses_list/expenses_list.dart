@@ -14,6 +14,10 @@ class ExpensesList extends StatelessWidget {
         itemBuilder: (context, index) {
           // remove expense
           return Dismissible(
+              background: Container(
+                color: Theme.of(context).colorScheme.error.withOpacity(0.50),
+                margin: const EdgeInsets.all(14),
+              ),
               onDismissed: (direction) {
                 remove(expense[index]);
               },

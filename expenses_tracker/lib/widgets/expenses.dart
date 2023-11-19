@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/widgets/chart/chart.dart';
 import 'package:expenses_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expenses_tracker/models/expense.dart';
 import 'package:expenses_tracker/widgets/new_expense.dart';
@@ -27,6 +28,7 @@ class _ExpensesState extends State<Expenses> {
   void _openAddExpenseOverlay(ctx) {
     showModalBottomSheet(
         isScrollControlled: true,
+        backgroundColor: ThemeData.dark().primaryColor,
         context: context,
         builder: (ctx) {
           return NewExpense(
@@ -85,7 +87,7 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.add))
       ]),
       body: Column(children: [
-        const Text("The Charts"),
+        Chart(expenses: _registerExpenses),
         // list of expenses
         Expanded(child: mainContent)
       ]),
