@@ -78,7 +78,7 @@ class _ExpensesState extends State<Expenses> {
           ExpensesList(expense: _registerExpenses, remove: _removeExpense);
     }
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         // toolbar topBar
         appBar: AppBar(title: const Text("Expenses Tracker"), actions: [

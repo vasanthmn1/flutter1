@@ -1,6 +1,5 @@
 import 'package:expenses_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key, required this.onAddExpense});
