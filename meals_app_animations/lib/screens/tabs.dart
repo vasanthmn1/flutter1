@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_app/provider/favorite_meal_provider.dart';
-import 'package:meals_app/provider/filter_provider.dart';
-import 'package:meals_app/provider/meals_provider.dart';
-import 'package:meals_app/screens/categories.dart';
-import 'package:meals_app/screens/filters.dart';
-import 'package:meals_app/screens/meals.dart';
-import 'package:meals_app/widgets/main_drawer.dart';
+import 'package:meals_app_animations/provider/favorite_meal_provider.dart';
+import 'package:meals_app_animations/provider/filter_provider.dart';
+import 'package:meals_app_animations/provider/meals_provider.dart';
+import 'package:meals_app_animations/screens/categories.dart';
+import 'package:meals_app_animations/screens/filters.dart';
+import 'package:meals_app_animations/screens/meals.dart';
+import 'package:meals_app_animations/widgets/main_drawer.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -33,8 +33,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final meals = ref.watch(mealsProvider);
-    // final activeFilter = ref.watch(filtersProvider);
+    final meals = ref.watch(mealsProvider);
+    final activeFilter = ref.watch(filtersProvider);
 
     final availableMeals = ref.watch(filterMealsProvider);
 

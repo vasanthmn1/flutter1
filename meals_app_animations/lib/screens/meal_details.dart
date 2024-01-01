@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_app/models/meal.dart';
-import 'package:meals_app/provider/favorite_meal_provider.dart';
+import 'package:meals_app_animations/models/meal.dart';
+import 'package:meals_app_animations/provider/favorite_meal_provider.dart';
 
 class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({
@@ -31,25 +31,11 @@ class MealDetailsScreen extends ConsumerWidget {
 
               // onToggleFavorite(meal);
             },
-            icon: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) {
-                return RotationTransition(
-                  turns: Tween<double>(begin: 1, end: 1.2).animate(animation),
-                  child: Icon(
-                    isFavorite ? Icons.star : Icons.star_border,
-                  ),
-                );
-              },
-              child: Icon(
-                isFavorite ? Icons.star : Icons.star_border,
-                key: ValueKey(isFavorite),
-              ),
-            )),
+            icon: Icon(isFavorite ? Icons.star : Icons.star_border))
       ]),
       body: SingleChildScrollView(
         child: Column(children: [
-          Hero(tag: meal.id, child: Image.network(meal.imageUrl)),
+          Image.network(meal.imageUrl),
           const SizedBox(
             height: 14,
           ),
